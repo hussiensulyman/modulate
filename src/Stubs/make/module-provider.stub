@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ ModuleNamespace }};
+
+use Illuminate\Support\ServiceProvider;
+
+class {{ ClassName }} extends ServiceProvider
+{
+    public function register(): void
+    {
+        //
+    }
+
+    public function boot(): void
+    {
+        $routesPath = __DIR__.'/Routes';
+
+        if (is_file($routesPath.'/web.php')) {
+            $this->loadRoutesFrom($routesPath.'/web.php');
+        }
+
+        if (is_file($routesPath.'/api.php')) {
+            $this->loadRoutesFrom($routesPath.'/api.php');
+        }
+
+        if (is_file($routesPath.'/routes.php')) {
+            $this->loadRoutesFrom($routesPath.'/routes.php');
+        }
+
+        $this->loadMigrationsFrom(__DIR__.'/Migrations');
+    }
+}

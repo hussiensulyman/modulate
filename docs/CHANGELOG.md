@@ -10,6 +10,7 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 - feat: implement modulate:install and modulate:init commands with full testing
+- feat: implement modulate:make and scaffolding commands with full testing
 
 ### Planned
 

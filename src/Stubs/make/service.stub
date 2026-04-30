@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ ModuleNamespace }}\Services;
+
+class {{ ClassName }}
+{
+    public function handle(): array
+    {
+        return ['ok' => true];
+    }
+}

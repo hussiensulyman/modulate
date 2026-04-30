@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ ModuleNamespace }}\Events;
+
+class {{ ClassName }}
+{
+    public function __construct(
+        public readonly int $id,
+    ) {
+    }
+}

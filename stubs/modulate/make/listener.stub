@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ ModuleNamespace }}\Listeners;
+
+class {{ ClassName }}
+{
+    public function handle(object $event): void
+    {
+        //
+    }
+}

@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ ModuleNamespace }}\Controllers\Api;
+
+use Illuminate\Http\JsonResponse;
+
+class {{ ClassName }}
+{
+    public function index(): JsonResponse
+    {
+        return response()->json(['ok' => true]);
+    }
+}

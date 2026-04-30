@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ ModuleNamespace }}\Controllers\Web;
+
+use Illuminate\Http\Response;
+
+class {{ ClassName }}
+{
+    public function index(): Response
+    {
+        return response('OK');
+    }
+}
