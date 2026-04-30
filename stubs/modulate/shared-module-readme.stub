@@ -1,0 +1,18 @@
+# Shared Module
+
+Base infrastructure and abstractions shared across all modules.
+
+## Contents
+
+- `Contracts/` — Interface definitions for cross-module communication
+- `DTOs/` — Data Transfer Objects used across module boundaries
+- `Enums/` — Shared domain enums
+- `Traits/` — Reusable traits for models and classes
+- `Exceptions/` — Custom exception classes
+- `Helpers/` — Utility functions
+
+## Rule
+
+The Shared module should contain **only** abstractions and utilities. Concrete implementations belong in feature modules.
+
+Do not add business logic or domain models here.

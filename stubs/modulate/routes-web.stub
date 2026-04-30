@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Module routes are automatically loaded by each module's ServiceProvider.
+| This file is kept as a reference. Add web routes directly in:
+|   app/Modules/{Module}/Routes/web.php
+|
+*/

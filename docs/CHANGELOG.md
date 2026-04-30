@@ -9,7 +9,7 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- chore: initialize package skeleton, config, testbed, and orchestra/testbench setup
+- feat: implement modulate:install and modulate:init commands with full testing
 
 ### Planned
 

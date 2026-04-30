@@ -1,0 +1,16 @@
+# Global Middleware
+
+This folder contains middleware that applies globally to your application.
+
+## Rule
+
+Global middleware should be minimal and apply to all requests:
+
+- Authentication checks
+- CORS configuration
+- Security headers
+- Request logging
+
+Module-specific middleware should live inside the module that uses it:
+- `app/Modules/{Module}/Middleware/`
+

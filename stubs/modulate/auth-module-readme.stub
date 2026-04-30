@@ -1,0 +1,18 @@
+# Auth Module
+
+User authentication, authorization, and identity management.
+
+## Contents
+
+- `Models/User.php` — The User model (moved from app/Models/)
+- `Services/` — Authentication services
+- `Contracts/` — Auth service interfaces
+- `Events/` — Authentication events (UserRegistered, LoginAttempted, etc.)
+- `Routes/` — Auth routes
+- `Migrations/` — Auth-related database migrations
+
+## Usage
+
+The User model is available from both:
+- `App\Models\User` (alias for backward compatibility)
+- `App\Modules\Auth\Models\User` (canonical location)
