@@ -9,6 +9,9 @@ A Laravel package that scaffolds a clean modular monolith architecture — with 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PHP: ^8.2](https://img.shields.io/badge/PHP-%5E8.2-777BB4)](https://php.net)
 [![Laravel: ^10|^11](https://img.shields.io/badge/Laravel-%5E10%7C%5E11-FF2D20)](https://laravel.com)
+[![Packagist Version](https://img.shields.io/packagist/v/hussiensulyman/modulate)](https://packagist.org/packages/hussiensulyman/modulate)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/hussiensulyman/modulate)](https://packagist.org/packages/hussiensulyman/modulate)
+[![Tests](https://github.com/hussiensulyman/modulate/actions/workflows/tests.yml/badge.svg)](https://github.com/hussiensulyman/modulate/actions/workflows/tests.yml)
 
 </div>
 
