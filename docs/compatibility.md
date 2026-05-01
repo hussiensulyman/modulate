@@ -27,6 +27,13 @@ These packages are fully compatible with Modulate out of the box:
 
 #### `laravel/sanctum`
 
+```yaml
+# package: laravel/sanctum
+# status: needs-setup
+# notes: Sanctum may reference App\Models\User when running strict module isolation.
+# action: "Add HasApiTokens to User model in Auth module"
+```
+
 Sanctum's migration references `App\Models\User`. If you ran `modulate:init --strict`, update the Sanctum config:
 
 ```php
@@ -41,6 +48,13 @@ If you used the default `modulate:init` (with alias), no changes needed — the 
 
 #### `spatie/laravel-permission`
 
+```yaml
+# package: spatie/laravel-permission
+# status: needs-setup
+# notes: Role traits must be applied to the relocated Auth module user model.
+# action: "Add HasRoles trait to Auth module User model"
+```
+
 Add `HasRoles` trait to the `User` model in its new location:
 
 ```php
@@ -54,6 +68,13 @@ class User extends Authenticatable
 ```
 
 #### `tymon/jwt-auth`
+
+```yaml
+# package: tymon/jwt-auth
+# status: needs-setup
+# notes: JWTSubject implementation must be added to the modularized Auth user model.
+# action: "Implement JWTSubject on Auth module User model"
+```
 
 Implement the `JWTSubject` interface on the `User` model in its new location:
 
@@ -80,6 +101,13 @@ These packages generate files into `app/Http/Controllers/` or similar default pa
 
 #### `laravel/breeze`
 
+```yaml
+# package: laravel/breeze
+# status: needs-setup
+# notes: Breeze generators target default Laravel app and routes directories.
+# action: "Move generated auth controllers and routes into Auth module"
+```
+
 Breeze generates controllers, views, and routes into default Laravel locations. After installing:
 
 1. Move controllers from `app/Http/Controllers/Auth/` → `app/Modules/Auth/Controllers/Web/`
@@ -92,6 +120,13 @@ Breeze generates controllers, views, and routes into default Laravel locations. 
 Same approach as Breeze. Jetstream generates more files — controllers, actions, views, tests. Move them module by module after generation.
 
 #### `filament/filament`
+
+```yaml
+# package: filament/filament
+# status: needs-setup
+# notes: Filament can stay in app/Filament or be mapped into a dedicated Admin module.
+# action: "Choose admin structure and configure Filament paths accordingly"
+```
 
 Filament generates resources into `app/Filament/`. This is fine to leave as-is if Filament is your admin panel — it operates as its own parallel structure. Alternatively, treat Filament as its own module: `app/Modules/Admin/` and configure Filament's paths accordingly.
 
