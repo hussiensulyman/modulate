@@ -10,6 +10,7 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 - feat: implement modulate:doctor compatibility scanner skeleton
+- feat: complete modulate:doctor compatibility scanner with YAML parsing and colored output
 
 ---
 

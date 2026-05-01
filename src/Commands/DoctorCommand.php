@@ -11,7 +11,8 @@ class DoctorCommand extends Command
 {
     protected $signature = 'modulate:doctor
         {--compatibility= : Path to compatibility markdown file}
-        {--installed= : Comma-separated installed package list override}';
+        {--installed= : Comma-separated installed package list override}
+        {--json : Output machine-readable JSON}';
 
     protected $description = 'Scan installed Composer packages and report Modulate compatibility guidance.';
 
@@ -37,9 +38,15 @@ class DoctorCommand extends Command
             return self::SUCCESS;
         }
 
+        if ((bool) $this->option('json')) {
+            $this->line((string) json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+            return self::SUCCESS;
+        }
+
         $scanner->renderTable($results);
 
-        $warnings = count(array_filter($results, static fn (array $result): bool => $result['status'] === 'warning'));
+        $warnings = count(array_filter($results, static fn (array $result): bool => $result['status'] === 'needs-setup'));
         $unknown = count(array_filter($results, static fn (array $result): bool => $result['status'] === 'unknown'));
 
         if ($warnings > 0 || $unknown > 0) {
@@ -61,11 +68,27 @@ class DoctorCommand extends Command
     private function resolveInstalledPackages(): array
     {
         $override = $this->option('installed');
-        if (is_string($override) && trim($override) !== '') {
-            return array_values(array_filter(array_map(
+
+        if (! is_string($override) && ! is_array($override)) {
+            $rawOption = $this->input?->getParameterOption('--installed', null, true);
+            if (is_string($rawOption) || is_array($rawOption)) {
+                $override = $rawOption;
+            }
+        }
+
+        if (is_array($override)) {
+            $override = implode(',', array_filter($override, static fn (mixed $value): bool => is_string($value)));
+        }
+
+        if (is_string($override)) {
+            if (trim($override) === '') {
+                return [];
+            }
+
+            return array_values(array_unique(array_filter(array_map(
                 static fn (string $package): string => strtolower(trim($package)),
                 explode(',', $override)
-            )));
+            ))));
         }
 
         if (class_exists(\Composer\InstalledVersions::class)) {
