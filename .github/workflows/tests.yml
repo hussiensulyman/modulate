@@ -12,6 +12,9 @@ jobs:
     name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
     runs-on: ubuntu-latest
 
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -49,9 +52,11 @@ jobs:
       - name: Set Laravel/Testbench constraints
         run: |
           if [ "${{ matrix.laravel }}" = "10.*" ]; then
-            composer require --dev --no-update "illuminate/support:10.*" "orchestra/testbench:^8.0"
+            composer require --no-update "illuminate/support:10.*"
+            composer require --dev --no-update "orchestra/testbench:^8.0"
           else
-            composer require --dev --no-update "illuminate/support:11.*" "orchestra/testbench:^9.0"
+            composer require --no-update "illuminate/support:11.*"
+            composer require --dev --no-update "orchestra/testbench:^9.0"
           fi
 
       - name: Install dependencies
@@ -67,9 +72,9 @@ jobs:
         run: ./vendor/bin/pest --filter ViolationScanner --fail-on-warning --fail-on-risky --fail-on-deprecation
 
       - name: Upload coverage to Codecov
-        if: ${{ secrets.CODECOV_TOKEN != '' }}
+        if: ${{ env.CODECOV_TOKEN != '' }}
         uses: codecov/codecov-action@v4
         with:
           files: coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ env.CODECOV_TOKEN }}
           fail_ci_if_error: false
