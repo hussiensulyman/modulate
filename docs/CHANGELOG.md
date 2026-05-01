@@ -9,6 +9,7 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- ci: add GitHub Actions workflow for multi-version PHP/Laravel testing
 - feat: implement modulate:install and modulate:init commands with full testing
 - feat: implement modulate:make and scaffolding commands with full testing
 - feat: add module management commands, violation scanner, and lint/check with dry-run

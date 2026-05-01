@@ -30,7 +30,9 @@
     }
   },
   "scripts": {
-    "test": "./vendor/bin/pest"
+    "test": "pest",
+    "test:ci": "pest --coverage-clover=coverage.xml",
+    "lint": "pest --filter ViolationScanner"
   },
   "config": {
     "allow-plugins": {
