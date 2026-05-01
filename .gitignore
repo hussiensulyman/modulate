@@ -4,3 +4,5 @@ composer.lock
 .env
 *.log
 *.docx
+/.phpunit.cache/
+coverage.xml
