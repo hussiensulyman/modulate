@@ -57,6 +57,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
+      - name: Verify coverage driver
+        run: composer run coverage:check
+
       - name: Run Pest with coverage
         run: ./vendor/bin/pest --coverage-clover=coverage.xml --fail-on-warning --fail-on-risky --fail-on-deprecation
 

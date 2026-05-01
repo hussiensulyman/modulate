@@ -31,6 +31,7 @@
   },
   "scripts": {
     "test": "pest",
+    "coverage:check": "php -r \"if (!extension_loaded('xdebug') && !extension_loaded('pcov')) {fwrite(STDERR, 'No code coverage driver loaded. Install/enable Xdebug or PCOV.'.PHP_EOL); exit(1);} echo 'Coverage driver available.'.PHP_EOL;\"",
     "test:ci": "pest --coverage-clover=coverage.xml",
     "lint": "pest --filter ViolationScanner"
   },
