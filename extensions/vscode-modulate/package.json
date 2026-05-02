@@ -1,0 +1,40 @@
+{
+  "name": "vscode-modulate",
+  "displayName": "Modulate",
+  "description": "Inline Modulate architecture violations for Laravel modules.",
+  "version": "0.1.0",
+  "publisher": "hussiensulyman",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:modulate.runCheck"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "modulate.runCheck",
+        "title": "Modulate: Run Architecture Check",
+        "category": "Modulate"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "lint": "tsc -p ./ --noEmit",
+    "vscode:prepublish": "npm run compile",
+    "test": "npm run compile && node --test \"dist/test/**/*.test.js\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.1",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.6.2"
+  }
+}
