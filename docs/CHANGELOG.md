@@ -9,6 +9,12 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+-
+
+---
+
+## [0.2.1] — 2026-05-02
+
 - feat: add AST-based violation detection with nikic/php-parser (optional, backward compatible)
 
 ---
