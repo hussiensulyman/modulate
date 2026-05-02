@@ -7,8 +7,9 @@
 A Laravel package that scaffolds a clean modular monolith architecture — with enforced boundaries, self-contained modules, a built-in violation checker, and a natural extraction path to microservices when you actually need it.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Status: Stable](https://img.shields.io/badge/status-stable-brightgreen)](https://packagist.org/packages/hussiensulyman/modulate)
 [![PHP: ^8.2](https://img.shields.io/badge/PHP-%5E8.2-777BB4)](https://php.net)
-[![Laravel: ^10|^11](https://img.shields.io/badge/Laravel-%5E10%7C%5E11-FF2D20)](https://laravel.com)
+[![Laravel: ^10|^11|^12](https://img.shields.io/badge/Laravel-%5E10%7C%5E11%7C%5E12-FF2D20)](https://laravel.com)
 [![Packagist Version](https://img.shields.io/packagist/v/hussiensulyman/modulate)](https://packagist.org/packages/hussiensulyman/modulate)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/hussiensulyman/modulate)](https://packagist.org/packages/hussiensulyman/modulate)
 [![Tests](https://github.com/hussiensulyman/modulate/actions/workflows/tests.yml/badge.svg)](https://github.com/hussiensulyman/modulate/actions/workflows/tests.yml)
@@ -50,7 +51,7 @@ Each module owns its routes, models, migrations, services, events, and tests. Mo
 ## Installation
 
 ```bash
-composer require yourname/modulate
+composer require hussiensulyman/modulate:^1.0
 ```
 
 ### New project
@@ -230,7 +231,7 @@ jobs:
                 run: composer install --prefer-dist --no-progress --no-interaction
 
             - name: Run Modulate lint
-                uses: hussiensulyman/modulate/.github/actions/modulate-lint@v0.2.2
+                uses: hussiensulyman/modulate/.github/actions/modulate-lint@v1.0.0
                 with:
                     working-directory: ./
                     config-path: config/modulate.php
@@ -245,7 +246,7 @@ The reusable action works the same whether `hussiensulyman/modulate` is installe
 php artisan modulate:extract {Name}   # generate tailored extraction checklist
 ```
 
-> `modulate:doctor` — package compatibility scanner — is coming in Phase 2.
+Use `php artisan modulate:doctor` to scan installed packages against known compatibility notes.
 
 ---
 
@@ -313,7 +314,7 @@ Detects:
 - Facade usage bypassing contracts (e.g. `Auth::user()` in a non-Auth module)
 - Direct access to another module's config keys
 
-Runs automatically on `php artisan optimize` when enabled. Uses regex scanning in v1, AST-based analysis planned for a future phase.
+Runs automatically on `php artisan optimize` when enabled. Detection combines fast regex rules and AST analysis via `nikic/php-parser`.
 
 ---
 
@@ -323,7 +324,7 @@ Most Laravel packages work with Modulate without issues. The ones that generate 
 
 Packages that extend the `User` model (Sanctum, Spatie Permission, JWT) work fine as long as they reference the correct `User` class location. See [docs/compatibility.md](docs/compatibility.md) for a curated list of popular packages and their setup notes.
 
-> `modulate:doctor` — an automated compatibility scanner — is coming in Phase 2.
+`modulate:doctor` is available and can be used in CI or locally to flag compatibility risks before deployment.
 
 ---
 

@@ -168,4 +168,4 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for how to contribute.
 
 ---
 
-> `modulate:doctor` — an automated compatibility scanner that checks your installed packages against this list — is planned for Phase 2.
+Use `php artisan modulate:doctor` to automatically check installed packages against this compatibility matrix.

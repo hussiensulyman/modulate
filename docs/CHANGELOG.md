@@ -9,7 +9,22 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- feat: add VS Code extension MVP for inline violation highlighting
+
+---
+
+## [1.0.0] — 2026-05-02
+
+- release: first stable production-ready release
+- feat: modular monolith scaffolding with enforced module boundaries
+- feat: complete command suite for install/init/make/make-* and module management workflows
+- feat: auto-discovery of module ServiceProviders
+- feat: violation checker with regex and AST analysis via nikic/php-parser
+- feat: compatibility scanner via `modulate:doctor` for third-party package validation
+- feat: health, graph, and extract tooling for architecture governance and microservice readiness
+- feat: reusable GitHub Action for `modulate:lint` in CI pipelines
+- feat: VS Code extension for inline violation highlighting
+- quality: validated through 51 passing tests and 236 assertions, plus real-world project adoption
+- policy: API freeze commitment for v1.x with non-breaking minor releases and bug-fix-only patches
 
 ---
 

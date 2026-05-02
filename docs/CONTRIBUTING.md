@@ -23,7 +23,7 @@ Thank you for your interest in contributing. This document explains how to get s
 ### Clone and install
 
 ```bash
-git clone https://github.com/yourname/modulate.git
+git clone https://github.com/hussiensulyman/modulate.git
 cd modulate
 composer install
 ```
@@ -50,7 +50,7 @@ In your Laravel project's `composer.json`, add a local path repository:
 Then:
 
 ```bash
-composer require yourname/modulate:@dev
+composer require hussiensulyman/modulate:@dev
 ```
 
 ---

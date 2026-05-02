@@ -29,7 +29,7 @@ actionlint
 
 ```yaml
 - name: Run Modulate lint (expect failure)
-  uses: hussiensulyman/modulate/.github/actions/modulate-lint@v0.2.2
+  uses: hussiensulyman/modulate/.github/actions/modulate-lint@v1.0.0
 ```
 
 Expected result: workflow step exits with code `1`.
@@ -42,7 +42,7 @@ Expected result: workflow step exits with code `0`.
 
 ```yaml
 - name: Run Modulate lint (non-blocking)
-  uses: hussiensulyman/modulate/.github/actions/modulate-lint@v0.2.2
+  uses: hussiensulyman/modulate/.github/actions/modulate-lint@v1.0.0
   with:
     fail-on-violations: 'false'
 ```

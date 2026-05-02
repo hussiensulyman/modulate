@@ -18,7 +18,7 @@ Take stock of what you have:
 ### Install Modulate
 
 ```bash
-composer require yourname/modulate
+composer require hussiensulyman/modulate:^1.0
 php artisan modulate:install
 ```
 

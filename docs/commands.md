@@ -311,7 +311,7 @@ php artisan modulate:lint
 | Facade bypassing contract | `Auth::user()` called inside `Course` module |
 | Cross-module config access | `config('course.*')` read from `Billing` |
 
-Detection uses **regex scanning** in v1. AST-based analysis via `nikic/php-parser` is planned for a future phase for higher accuracy.
+Detection combines **regex scanning** and AST analysis via `nikic/php-parser` for higher accuracy.
 
 Runs automatically on `php artisan optimize` when `check_on_optimize` is enabled in config.
 
@@ -392,7 +392,7 @@ Tests to verify:
 ════════════════════════════════════════════════════
 ```
 
-> `modulate:doctor` — package compatibility scanner — coming in Phase 2.
+`modulate:doctor` is available and scans your installed packages against known compatibility guidance.
 
 ---
 
