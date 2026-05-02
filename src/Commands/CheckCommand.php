@@ -9,7 +9,7 @@ use Modulate\Support\ViolationScanner;
 
 class CheckCommand extends Command
 {
-    protected $signature = 'modulate:check {--use-ast : Enable AST-based scanning when available}';
+    protected $signature = 'modulate:check {--ci : CI mode output (compatibility flag)} {--use-ast : Enable AST-based scanning when available}';
 
     protected $description = 'Scan modules for architecture and coupling violations.';
 

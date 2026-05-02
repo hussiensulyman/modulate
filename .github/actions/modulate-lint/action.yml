@@ -1,0 +1,54 @@
+name: 'Modulate Lint'
+description: 'Run modulate:lint to detect architectural violations'
+
+inputs:
+  working-directory:
+    description: 'Working directory for Laravel project'
+    required: false
+    default: './'
+  config-path:
+    description: 'Path to modulate config file'
+    required: false
+    default: 'config/modulate.php'
+  fail-on-violations:
+    description: 'Fail CI if violations found'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Modulate Lint
+      shell: bash
+      run: |
+        if ! cd "${{ inputs.working-directory }}"; then
+          echo "::error::Unable to enter working directory '${{ inputs.working-directory }}'."
+          exit 2
+        fi
+
+        if [ ! -f artisan ]; then
+          echo "::error::artisan not found in '${{ inputs.working-directory }}'."
+          exit 2
+        fi
+
+        if ! php artisan list --raw | grep -q '^modulate:lint$'; then
+          echo "::error::modulate:lint command is unavailable. Ensure hussiensulyman/modulate is installed (Packagist or path repository)."
+          exit 3
+        fi
+
+        php artisan modulate:lint --ci
+        status=$?
+
+        if [ "$status" -ne 0 ]; then
+          if [ "${{ inputs.fail-on-violations }}" = 'true' ]; then
+            echo "::error::modulate:lint detected violations."
+            exit "$status"
+          fi
+
+          echo "::warning::modulate:lint detected violations, but fail-on-violations=false."
+        fi
+
+        exit 0
+      env:
+        MODULATE_CONFIG: ${{ inputs.config-path }}
+        MODULATE_FAIL_ON_VIOLATIONS: ${{ inputs.fail-on-violations }}

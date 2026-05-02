@@ -9,7 +9,7 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
--
+- feat: add reusable GitHub Action for modulate:lint in CI pipelines
 
 ---
 

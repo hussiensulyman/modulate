@@ -205,6 +205,40 @@ php artisan modulate:lint      # alias for modulate:check (CI-friendly)
 php artisan modulate:graph     # visualize module dependency graph
 ```
 
+### CI with GitHub Actions
+
+```yaml
+name: Modulate Lint
+
+on:
+    pull_request:
+    push:
+        branches: [main, master]
+
+jobs:
+    modulate-lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.3'
+                    tools: composer:v2
+
+            - name: Install dependencies
+                run: composer install --prefer-dist --no-progress --no-interaction
+
+            - name: Run Modulate lint
+                uses: hussiensulyman/modulate/.github/actions/modulate-lint@v0.2.2
+                with:
+                    working-directory: ./
+                    config-path: config/modulate.php
+                    fail-on-violations: 'true'
+```
+
+The reusable action works the same whether `hussiensulyman/modulate` is installed from Packagist or via a Composer path repository, as long as dependencies are installed before running the action.
+
 ### Microservices
 
 ```bash
@@ -306,6 +340,7 @@ Modulate follows [Semantic Versioning](https://semver.org). Breaking changes are
 - [docs/migration-guide.md](docs/migration-guide.md) — adopting Modulate in an existing project
 - [docs/microservices-extraction.md](docs/microservices-extraction.md) — extracting a module into a standalone service
 - [docs/compatibility.md](docs/compatibility.md) — third-party package compatibility notes
+- [docs/github-action.md](docs/github-action.md) — reusable `modulate:lint` GitHub Action and manual CI validation
 - [UPGRADING.md](UPGRADING.md) — upgrade guides between major versions
 
 ---

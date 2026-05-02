@@ -37,6 +37,25 @@ class CheckCommandAstTest extends TestCase
             ->assertExitCode(1);
     }
 
+    public function test_check_command_accepts_ci_option_when_clean(): void
+    {
+        config()->set('modulate.check_violations', true);
+
+        $this->artisan('modulate:check', ['--ci' => true])
+            ->assertExitCode(0);
+    }
+
+    public function test_lint_alias_accepts_ci_option_and_returns_failure_on_violation(): void
+    {
+        config()->set('modulate.check_violations', true);
+        config()->set('modulate.use_ast', true);
+        $this->seedAstOnlyViolationFixtures();
+
+        $this->artisan('modulate:lint', ['--ci' => true, '--use-ast' => true])
+            ->expectsOutputToContain('direct_model_import')
+            ->assertExitCode(1);
+    }
+
     private function seedAstOnlyViolationFixtures(): void
     {
         $this->files->ensureDirectoryExists(app_path('Modules/Course/Models'));
