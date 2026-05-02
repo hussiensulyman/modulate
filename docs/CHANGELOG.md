@@ -20,6 +20,12 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.3.0] — 2026-05-02
+
+- feat: add VS Code extension MVP for inline violation highlighting
+
+---
+
 ## [0.2.2] — 2026-05-02
 
 - feat: add reusable GitHub Action for modulate:lint in CI pipelines
