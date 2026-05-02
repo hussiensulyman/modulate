@@ -9,12 +9,16 @@ use Modulate\Support\ViolationScanner;
 
 class CheckCommand extends Command
 {
-    protected $signature = 'modulate:check';
+    protected $signature = 'modulate:check {--use-ast : Enable AST-based scanning when available}';
 
     protected $description = 'Scan modules for architecture and coupling violations.';
 
     public function handle(): int
     {
+        if ((bool) $this->option('use-ast')) {
+            config()->set('modulate.use_ast', true);
+        }
+
         $configuration = config('modulate.check_violations', true);
 
         if ($configuration === false) {

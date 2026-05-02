@@ -35,6 +35,9 @@ return [
     // Warn on coupling violations
     'check_violations' => true,
 
+    // Enable AST-based scanning (requires nikic/php-parser)
+    'use_ast' => false,
+
     // Auto-run modulate:check on php artisan optimize
     'check_on_optimize' => true,
 

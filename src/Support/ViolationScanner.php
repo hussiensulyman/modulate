@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modulate\Support;
 
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Finder\Finder;
 
 class ViolationScanner
@@ -19,13 +20,85 @@ class ViolationScanner
             return [];
         }
 
-        $patterns = $this->resolvePatterns($configuration);
-        $violations = [];
-
         $modulesRoot = app_path((string) config('modulate.path', 'Modules'));
         if (! is_dir($modulesRoot)) {
             return [];
         }
+
+        $patterns = $this->resolvePatterns($configuration);
+
+        if ($this->useAst()) {
+            $astViolations = $this->scanWithAst($modulesRoot, $patterns);
+            if ($astViolations !== null) {
+                return array_merge($astViolations, $this->findMissingBindings($modulesRoot));
+            }
+        }
+
+        return array_merge(
+            $this->scanWithRegex($modulesRoot, $patterns),
+            $this->findMissingBindings($modulesRoot)
+        );
+    }
+
+    protected function useAst(): bool
+    {
+        return (bool) config('modulate.use_ast', false);
+    }
+
+    /**
+     * @param array<int, array{type: string, pattern: string, message: string}> $patterns
+     *
+     * @return array<int, array{type: string, file: string, line: int, message: string}>|null
+     */
+    protected function scanWithAst(string $modulesRoot, array $patterns): ?array
+    {
+        if (! class_exists(AstViolationScanner::class)) {
+            Log::warning('AST scanner is unavailable. Falling back to regex violation scanning.');
+
+            return null;
+        }
+
+        try {
+            $scanner = $this->createAstScanner();
+            $astViolations = $scanner->scan($modulesRoot);
+
+            foreach ($scanner->warnings() as $warning) {
+                Log::warning($warning);
+            }
+
+            $failedFiles = $scanner->failedFiles();
+            if ($failedFiles === []) {
+                return $astViolations;
+            }
+
+            $fallbackViolations = $this->scanWithRegex($modulesRoot, $patterns, $failedFiles);
+
+            return array_merge($astViolations, $fallbackViolations);
+        } catch (\Throwable $error) {
+            Log::warning(sprintf(
+                'AST violation scanner failed: %s. Falling back to regex scanning.',
+                $error->getMessage()
+            ));
+
+            return null;
+        }
+    }
+
+    protected function createAstScanner(): AstViolationScanner
+    {
+        return new AstViolationScanner();
+    }
+
+    /**
+     * @param array<int, array{type: string, pattern: string, message: string}> $patterns
+     * @param array<int, string> $onlyFiles
+     *
+     * @return array<int, array{type: string, file: string, line: int, message: string}>
+     */
+    private function scanWithRegex(string $modulesRoot, array $patterns, array $onlyFiles = []): array
+    {
+        $violations = [];
+        $restrictTo = $this->buildPathIndex($onlyFiles);
 
         $finder = (new Finder())
             ->files()
@@ -34,6 +107,11 @@ class ViolationScanner
 
         foreach ($finder as $file) {
             $path = $file->getRealPath() ?: $file->getPathname();
+
+            if ($restrictTo !== [] && ! isset($restrictTo[$this->normalizePath($path)])) {
+                continue;
+            }
+
             $content = $file->getContents();
             $module = $this->moduleFromPath($path, $modulesRoot);
 
@@ -59,7 +137,7 @@ class ViolationScanner
             }
         }
 
-        return array_merge($violations, $this->findMissingBindings($modulesRoot));
+        return $violations;
     }
 
     /**
@@ -169,6 +247,29 @@ class ViolationScanner
     private function lineNumberForOffset(string $content, int $offset): int
     {
         return substr_count(substr($content, 0, max(0, $offset)), "\n") + 1;
+    }
+
+    /**
+     * @param array<int, string> $paths
+     *
+     * @return array<string, true>
+     */
+    private function buildPathIndex(array $paths): array
+    {
+        $index = [];
+
+        foreach ($paths as $path) {
+            $index[$this->normalizePath($path)] = true;
+        }
+
+        return $index;
+    }
+
+    private function normalizePath(string $path): string
+    {
+        $resolved = realpath($path);
+
+        return str_replace('\\\\', '/', $resolved !== false ? $resolved : $path);
     }
 
     /**
