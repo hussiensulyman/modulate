@@ -129,6 +129,11 @@ class DoctorCommand extends Command
             return $option;
         }
 
-        return base_path('docs/compatibility.md');
+        $projectPath = base_path('docs/compatibility.md');
+        if (is_file($projectPath)) {
+            return $projectPath;
+        }
+
+        return dirname(__DIR__, 2).'/docs/compatibility.md';
     }
 }

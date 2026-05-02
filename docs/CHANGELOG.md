@@ -13,6 +13,13 @@ Modulate follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.3.1] — 2026-05-02
+
+- fix: resolve Laravel 12 dependency constraint issue found in FajrLearning validation
+- fix: resolve modulate:doctor default compatibility file lookup issue found in FajrLearning validation
+
+---
+
 ## [0.2.2] — 2026-05-02
 
 - feat: add reusable GitHub Action for modulate:lint in CI pipelines

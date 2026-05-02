@@ -86,6 +86,19 @@ class DoctorCommandTest extends TestCase
         $this->assertStringContainsString('Unknown', $buffered);
     }
 
+    public function test_doctor_uses_bundled_compatibility_file_when_default_project_file_is_missing(): void
+    {
+        $exitCode = Artisan::call('modulate:doctor', [
+            '--installed' => 'laravel/sanctum',
+        ]);
+
+        $buffered = Artisan::output();
+
+        $this->assertSame(0, $exitCode);
+        $this->assertStringContainsString('laravel/sanctum', $buffered);
+        $this->assertStringContainsString('Needs Setup', $buffered);
+    }
+
     public function test_doctor_warns_when_no_packages_detected(): void
     {
         $exitCode = Artisan::call('modulate:doctor', [
